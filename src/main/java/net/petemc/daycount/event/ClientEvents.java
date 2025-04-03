@@ -1,19 +1,19 @@
 package net.petemc.daycount.event;
 
-import net.minecraft.client.gui.components.events.GuiEventListener;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.CustomizeGuiOverlayEvent;
+import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import net.petemc.daycount.DayCount;
 import net.petemc.daycount.client.DayCountHud;
 import net.petemc.daycount.util.KeyBinding;
 
 public class ClientEvents {
 
-    @Mod.EventBusSubscriber(modid = DayCount.MOD_ID, value = Dist.CLIENT)
+    @EventBusSubscriber (value = Dist.CLIENT, modid = DayCount.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
     public static class ClientForgeEvents {
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
@@ -23,12 +23,12 @@ public class ClientEvents {
         }
 
         @SubscribeEvent
-        public static void registerGuiOverlays(CustomizeGuiOverlayEvent event) {
+        public static void registerGuiOverlays(RenderGuiEvent.Pre event) {
             DayCountHud.DAY_COUNT_HUD_INSTANCE.render(event.getGuiGraphics(), event.getPartialTick());
         }
     }
 
-    @Mod.EventBusSubscriber(modid = DayCount.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+    @EventBusSubscriber(modid = DayCount.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
     public static class ClientModBusEvents {
         @SubscribeEvent
         public static void onKeyRegister(RegisterKeyMappingsEvent event) {

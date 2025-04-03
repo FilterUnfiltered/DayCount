@@ -1,12 +1,12 @@
 package net.petemc.daycount.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.config.ModConfigEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import net.petemc.daycount.DayCount;
 
-@Mod.EventBusSubscriber(modid = DayCount.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = DayCount.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class MainConfig
 {
     public static boolean getDayCountEnabled() { return dayCountEnabled; }
@@ -34,42 +34,42 @@ public class MainConfig
     public static int getTextColor() { return textColor; }
 
     // Server Config
-    private static final ForgeConfigSpec.Builder BUILDER_SERVER = new ForgeConfigSpec.Builder();
+    private static final ModConfigSpec.Builder BUILDER_SERVER = new ModConfigSpec.Builder();
     // no server config
-    public static final ForgeConfigSpec SPEC_SERVER = BUILDER_SERVER.build();
+    public static final ModConfigSpec SPEC_SERVER = BUILDER_SERVER.build();
 
     // Client Config
-    private static final ForgeConfigSpec.Builder BUILDER_CLIENT = new ForgeConfigSpec.Builder();
+    private static final ModConfigSpec.Builder BUILDER_CLIENT = new ModConfigSpec.Builder();
 
-    private static final ForgeConfigSpec.BooleanValue DAY_COUNT_ENABLED = BUILDER_CLIENT
+    private static final ModConfigSpec.BooleanValue DAY_COUNT_ENABLED = BUILDER_CLIENT
             .comment("If true, the Day Count will be displayed | default: true")
             .define("dayCountEnabled", true);
 
-    private static final ForgeConfigSpec.IntValue DAY_OFFSET = BUILDER_CLIENT
+    private static final ModConfigSpec.IntValue DAY_OFFSET = BUILDER_CLIENT
             .comment("Offset to add to the Day Count | default: 1")
             .defineInRange("dayOffset", 1, 0, Integer.MAX_VALUE);
 
-    private static final ForgeConfigSpec.DoubleValue SIZE_X = BUILDER_CLIENT
+    private static final ModConfigSpec.DoubleValue SIZE_X = BUILDER_CLIENT
             .comment("Horizontal size of the Day Counter | default: 2.0")
             .defineInRange("sizeX", 2.0, 0.0, 20000.0);
 
-    private static final ForgeConfigSpec.DoubleValue SIZE_Y = BUILDER_CLIENT
+    private static final ModConfigSpec.DoubleValue SIZE_Y = BUILDER_CLIENT
             .comment("Vertical size of the Day Counter | default: 2.0")
             .defineInRange("sizeY", 2.0, 0.0, 20000.0);
 
-    private static final ForgeConfigSpec.DoubleValue LOCATION_X = BUILDER_CLIENT
+    private static final ModConfigSpec.DoubleValue LOCATION_X = BUILDER_CLIENT
             .comment("Horizontal position of the Day Counter | default: 2.0")
             .defineInRange("locationX", 2.0, 0.0, 20000.0);
 
-    private static final ForgeConfigSpec.DoubleValue LOCATION_Y = BUILDER_CLIENT
+    private static final ModConfigSpec.DoubleValue LOCATION_Y = BUILDER_CLIENT
             .comment("Vertical position of the Day Counter | default: 2.0")
             .defineInRange("locationY", 2.0, 0.0, 20000.0);
 
-    private static final ForgeConfigSpec.IntValue TEXT_COLOR = BUILDER_CLIENT
+    private static final ModConfigSpec.IntValue TEXT_COLOR = BUILDER_CLIENT
             .comment("Text color of the Day Counter | default: 16777215 (for white)")
             .defineInRange("textColor", 0xffffff, 0, Integer.MAX_VALUE);
 
-    public static final ForgeConfigSpec SPEC_CLIENT = BUILDER_CLIENT.build();
+    public static final ModConfigSpec SPEC_CLIENT = BUILDER_CLIENT.build();
 
     private static boolean dayCountEnabled = true;
     private static int dayOffset = 1;
