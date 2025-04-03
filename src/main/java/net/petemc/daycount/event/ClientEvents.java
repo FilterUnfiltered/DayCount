@@ -1,11 +1,14 @@
 package net.petemc.daycount.event;
 
+import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.petemc.daycount.DayCount;
+import net.petemc.daycount.client.DayCountHud;
 import net.petemc.daycount.util.KeyBinding;
 
 public class ClientEvents {
@@ -17,6 +20,11 @@ public class ClientEvents {
             if (KeyBinding.DAYCOUNT_KEY.consumeClick()) {
                 DayCount.dayCountEnabled = !DayCount.dayCountEnabled;
             }
+        }
+
+        @SubscribeEvent
+        public static void registerGuiOverlays(CustomizeGuiOverlayEvent event) {
+            DayCountHud.DAY_COUNT_HUD_INSTANCE.render(event.getGuiGraphics(), event.getPartialTick());
         }
     }
 

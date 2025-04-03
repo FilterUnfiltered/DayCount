@@ -3,14 +3,22 @@ package net.petemc.daycount.client;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import net.petemc.daycount.DayCount;
 import net.petemc.daycount.config.MainConfig;
+import org.jetbrains.annotations.NotNull;
 
-public class DayCountClient {
+public class DayCountHud implements LayeredDraw.Layer {
+    public static DayCountHud DAY_COUNT_HUD_INSTANCE;
 
-    public static final IGuiOverlay HUD_DAY_COUNTER = ((gui, guiGraphics, partialTick, width, height) -> {
+    public static void init() {
+        DAY_COUNT_HUD_INSTANCE = new DayCountHud();
+    }
+
+    @Override
+    public void render(@NotNull GuiGraphics guiGraphics, float v) {
         if (DayCount.dayCountEnabled) {
             Minecraft mc = Minecraft.getInstance();
             assert mc.level != null;
@@ -28,5 +36,5 @@ public class DayCountClient {
                 matrixStack.popPose();
             }
         }
-    });
+    }
 }

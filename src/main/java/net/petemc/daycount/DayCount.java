@@ -2,7 +2,6 @@ package net.petemc.daycount;
 
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -14,7 +13,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.petemc.daycount.client.DayCountClient;
+import net.petemc.daycount.client.DayCountHud;
 import net.petemc.daycount.config.MainConfig;
 import org.slf4j.Logger;
 
@@ -29,6 +28,7 @@ public class DayCount {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         modEventBus.addListener(this::commonSetup);
+        DayCountHud.init();
 
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
@@ -57,11 +57,6 @@ public class DayCount {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
 
-        }
-
-        @SubscribeEvent
-        public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
-            event.registerAboveAll("day_counter", DayCountClient.HUD_DAY_COUNTER);
         }
     }
 }
