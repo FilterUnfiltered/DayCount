@@ -47,7 +47,7 @@ public class DayCount {
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-        LOGGER.info("Initializing DayCount Mod for Forge");
+        LOGGER.info("Initializing DayCount mod for Forge");
 
     }
 
@@ -61,7 +61,7 @@ public class DayCount {
 
         @SubscribeEvent
         public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
-            event.registerAboveAll("day_counter", DayCountClient.HUD_DAY_COUNTER);
+            event.registerAboveAll("day_counter_hud", DayCountClient.HUD_DAY_COUNTER);
         }
     }
 }
