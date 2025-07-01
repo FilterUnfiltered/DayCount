@@ -38,6 +38,7 @@ public class DayCount {
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             dayCountEnabled = MainConfig.getDayCountEnabled();
+            DayCountHud.setCurrentTextColor(MainConfig.getTextColor());
         });
     }
 

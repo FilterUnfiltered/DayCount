@@ -10,6 +10,15 @@ import org.jetbrains.annotations.NotNull;
 
 public class DayCountHud implements LayeredDraw.Layer {
     public static DayCountHud DAY_COUNT_HUD_INSTANCE;
+    private static String currentTextColor = "FFFFFF";
+
+    public static void setCurrentTextColor(String value) {
+        currentTextColor = value;
+    }
+
+    public String getCurrentTextColor() {
+        return currentTextColor;
+    }
 
     public static void init() {
         DAY_COUNT_HUD_INSTANCE = new DayCountHud();
@@ -28,7 +37,7 @@ public class DayCountHud implements LayeredDraw.Layer {
                 matrixStack.translate(MainConfig.getLocationX(), MainConfig.getLocationY(), 0);
                 matrixStack.scale(MainConfig.getSizeX(), MainConfig.getSizeY(), 2.5f);
 
-                guiGraphics.drawString(mc.font, "Day: " + (currentDay + MainConfig.getDayOffset()), 1, 1, MainConfig.getTextColor());
+                guiGraphics.drawString(mc.font, MainConfig.getDayCounterString() + (currentDay + MainConfig.getDayOffset()), 1, 1, Integer.parseInt(currentTextColor, 16));
                 matrixStack.popPose();
             }
         }

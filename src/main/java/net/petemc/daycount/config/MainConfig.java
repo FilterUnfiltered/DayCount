@@ -31,7 +31,9 @@ public class MainConfig
         return locationY;
     }
 
-    public static int getTextColor() { return textColor; }
+    public static String getTextColor() { return textColor; }
+
+    public static String getDayCounterString() { return dayCounterString; }
 
     // Server Config
     private static final ForgeConfigSpec.Builder BUILDER_SERVER = new ForgeConfigSpec.Builder();
@@ -65,9 +67,13 @@ public class MainConfig
             .comment("Vertical position of the Day Counter | default: 2.0")
             .defineInRange("locationY", 2.0, 0.0, 20000.0);
 
-    private static final ForgeConfigSpec.IntValue TEXT_COLOR = BUILDER_CLIENT
-            .comment("Text color of the Day Counter | default: 16777215 (for white)")
-            .defineInRange("textColor", 0xffffff, 0, Integer.MAX_VALUE);
+    private static final ForgeConfigSpec.ConfigValue<String> TEXT_COLOR = BUILDER_CLIENT
+            .comment("Color of the Day Counter | default: FFFFFF (for white)")
+            .define("textColor", "FFFFFF");
+
+    private static final ForgeConfigSpec.ConfigValue<String> DAY_COUNT_STRING = BUILDER_CLIENT
+            .comment("DayCounter String | default: 'Day: '")
+            .define("dayCounterString", "Day: ");
 
     public static final ForgeConfigSpec SPEC_CLIENT = BUILDER_CLIENT.build();
 
@@ -77,7 +83,8 @@ public class MainConfig
     private static float sizeY = 2.0f;
     private static float locationX = 2.0f;
     private static float locationY = 2.0f;
-    private static int textColor = 0xffffff;
+    private static String textColor = "FFFFFF";
+    private static String dayCounterString = "Day: ";
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event)
