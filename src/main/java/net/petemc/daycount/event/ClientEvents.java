@@ -22,7 +22,7 @@ public class ClientEvents {
         }
 
         @SubscribeEvent
-        public static void registerGuiOverlays(RenderGuiEvent.Pre event) {
+        public static void registerGuiOverlays(RenderGuiEvent.Post event) {
             DayCountHud.DAY_COUNT_HUD_INSTANCE.render(event.getGuiGraphics(), event.getPartialTick());
         }
     }

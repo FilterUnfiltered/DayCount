@@ -28,7 +28,7 @@ public class DayCountHud implements LayeredDraw.Layer {
                 matrixStack.pushPose();
                 matrixStack.translate(MainConfig.getLocationX(), MainConfig.getLocationY(), 0);
                 matrixStack.scale(MainConfig.getSizeX(), MainConfig.getSizeY(), 2.5f);
-                guiGraphics.drawString(mc.font, "Day: " + (currentDay + MainConfig.getDayOffset()), 1, 1, MainConfig.getTextColor());
+                guiGraphics.drawString(mc.font, MainConfig.getDayCounterString() + (currentDay + MainConfig.getDayOffset()), 1, 1, Integer.parseInt(MainConfig.getTextColor(), 16));
                 matrixStack.popPose();
             }
         }
