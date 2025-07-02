@@ -11,6 +11,15 @@ import org.joml.Matrix3x2fStack;
 
 public class DayCountHud implements Gui.RenderFunction {
     public static DayCountHud DAY_COUNT_HUD_INSTANCE;
+    private static String currentTextColor = "FFFFFFFF";
+
+    public static void setCurrentTextColor(String value) {
+        currentTextColor = value;
+    }
+
+    public String getCurrentTextColor() {
+        return currentTextColor;
+    }
 
     public static void init() {
         DAY_COUNT_HUD_INSTANCE = new DayCountHud();
@@ -28,7 +37,7 @@ public class DayCountHud implements Gui.RenderFunction {
                 matrixStack.pushMatrix();
                 matrixStack.translate(MainConfig.getLocationX(), MainConfig.getLocationY(), matrixStack);
                 matrixStack.scale(MainConfig.getSizeX(), MainConfig.getSizeY(), matrixStack);
-                guiGraphics.drawString(mc.font, MainConfig.getDayCounterString() + (currentDay + MainConfig.getDayOffset()), 1, 1, (int) Long.parseLong(MainConfig.getTextColorWithTransparency(), 16));
+                guiGraphics.drawString(mc.font, MainConfig.getDayCounterString() + (currentDay + MainConfig.getDayOffset()), 1, 1, (int) Long.parseLong(currentTextColor, 16));
                 matrixStack.popMatrix();
             }
         }
