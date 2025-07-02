@@ -1,15 +1,15 @@
 package net.petemc.daycount.client;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.LayeredDraw;
 import net.petemc.daycount.DayCount;
 import net.petemc.daycount.config.MainConfig;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix3x2fStack;
 
-public class DayCountHud implements LayeredDraw.Layer {
+public class DayCountHud implements Gui.RenderFunction {
     public static DayCountHud DAY_COUNT_HUD_INSTANCE;
 
     public static void init() {
@@ -24,12 +24,12 @@ public class DayCountHud implements LayeredDraw.Layer {
             int currentDay = (int) (mc.level.getDayTime() / 24000L);
             assert mc.gameMode != null;
             if (mc.gameMode.getPlayerMode().isSurvival() || mc.gameMode.getPlayerMode().isCreative()) {
-                PoseStack matrixStack = guiGraphics.pose();
-                matrixStack.pushPose();
-                matrixStack.translate(MainConfig.getLocationX(), MainConfig.getLocationY(), 0);
-                matrixStack.scale(MainConfig.getSizeX(), MainConfig.getSizeY(), 2.5f);
-                guiGraphics.drawString(mc.font, "Day: " + (currentDay + MainConfig.getDayOffset()), 1, 1, MainConfig.getTextColor());
-                matrixStack.popPose();
+                Matrix3x2fStack matrixStack = guiGraphics.pose();
+                matrixStack.pushMatrix();
+                matrixStack.translate(MainConfig.getLocationX(), MainConfig.getLocationY(), matrixStack);
+                matrixStack.scale(MainConfig.getSizeX(), MainConfig.getSizeY(), matrixStack);
+                guiGraphics.drawString(mc.font, MainConfig.getDayCounterString() + (currentDay + MainConfig.getDayOffset()), 1, 1, (int) Long.parseLong(MainConfig.getTextColorWithTransparency(), 16));
+                matrixStack.popMatrix();
             }
         }
     }

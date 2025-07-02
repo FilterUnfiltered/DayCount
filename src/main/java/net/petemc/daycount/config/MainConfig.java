@@ -6,7 +6,7 @@ import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.petemc.daycount.DayCount;
 
-@EventBusSubscriber(modid = DayCount.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = DayCount.MOD_ID)
 public class MainConfig
 {
     public static boolean getDayCountEnabled() { return dayCountEnabled; }
@@ -31,7 +31,9 @@ public class MainConfig
         return locationY;
     }
 
-    public static int getTextColor() { return textColor; }
+    public static String getTextColorWithTransparency() { return textColorWithTransparency; }
+
+    public static String getDayCounterString() { return dayCounterString; }
 
     // Server Config
     private static final ModConfigSpec.Builder BUILDER_SERVER = new ModConfigSpec.Builder();
@@ -65,9 +67,13 @@ public class MainConfig
             .comment("Vertical position of the Day Counter | default: 2.0")
             .defineInRange("locationY", 2.0, 0.0, 20000.0);
 
-    private static final ModConfigSpec.IntValue TEXT_COLOR = BUILDER_CLIENT
-            .comment("Text color of the Day Counter | default: 16777215 (for white)")
-            .defineInRange("textColor", 0xffffff, 0, Integer.MAX_VALUE);
+    private static final ModConfigSpec.ConfigValue<String> TEXT_COLOR_WITH_TRANSPARENCY = BUILDER_CLIENT
+            .comment("Color of the Day Counter (with transparency) | default: FFFFFFFF (the first FFs are the transparency value)")
+            .define("textColorWithTransparency", "FFFFFFFF");
+
+    private static final ModConfigSpec.ConfigValue<String> DAY_COUNT_STRING = BUILDER_CLIENT
+            .comment("DayCounter String | default: 'Day: '")
+            .define("dayCounterString", "Day: ");
 
     public static final ModConfigSpec SPEC_CLIENT = BUILDER_CLIENT.build();
 
@@ -77,7 +83,8 @@ public class MainConfig
     private static float sizeY = 2.0f;
     private static float locationX = 2.0f;
     private static float locationY = 2.0f;
-    private static int textColor = 0xffffff;
+    private static String textColorWithTransparency = "FFFFFFFF";
+    private static String dayCounterString = "Day: ";
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event)
@@ -94,7 +101,8 @@ public class MainConfig
             sizeY = SIZE_Y.get().floatValue();
             locationX = LOCATION_X.get().floatValue();
             locationY = LOCATION_Y.get().floatValue();
-            textColor = TEXT_COLOR.get();
+            textColorWithTransparency = TEXT_COLOR_WITH_TRANSPARENCY.get();
+            dayCounterString = DAY_COUNT_STRING.get();
         }
     }
 }

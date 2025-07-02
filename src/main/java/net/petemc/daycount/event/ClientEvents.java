@@ -12,7 +12,7 @@ import net.petemc.daycount.util.KeyBinding;
 
 public class ClientEvents {
 
-    @EventBusSubscriber (value = Dist.CLIENT, modid = DayCount.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
+    @EventBusSubscriber (value = Dist.CLIENT, modid = DayCount.MOD_ID)
     public static class ClientForgeEvents {
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
@@ -22,12 +22,12 @@ public class ClientEvents {
         }
 
         @SubscribeEvent
-        public static void registerGuiOverlays(RenderGuiEvent.Pre event) {
+        public static void registerGuiOverlays(RenderGuiEvent.Post event) {
             DayCountHud.DAY_COUNT_HUD_INSTANCE.render(event.getGuiGraphics(), event.getPartialTick());
         }
     }
 
-    @EventBusSubscriber(modid = DayCount.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
+    @EventBusSubscriber(modid = DayCount.MOD_ID, value = Dist.CLIENT)
     public static class ClientModBusEvents {
         @SubscribeEvent
         public static void onKeyRegister(RegisterKeyMappingsEvent event) {
