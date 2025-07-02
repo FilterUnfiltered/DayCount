@@ -1,10 +1,10 @@
 package net.petemc.daycount.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
-import net.petemc.daycount.DayCount;
+import net.petemc.daycount.*;
 
 @Mod.EventBusSubscriber(modid = DayCount.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MainConfig
@@ -31,7 +31,7 @@ public class MainConfig
         return locationY;
     }
 
-    public static String getTextColor() { return textColor; }
+    public static String getTextColorWithTransparency() { return textColorWithTransparency; }
 
     public static String getDayCounterString() { return dayCounterString; }
 
@@ -67,9 +67,9 @@ public class MainConfig
             .comment("Vertical position of the Day Counter | default: 2.0")
             .defineInRange("locationY", 2.0, 0.0, 20000.0);
 
-    private static final ForgeConfigSpec.ConfigValue<String> TEXT_COLOR = BUILDER_CLIENT
-            .comment("Color of the Day Counter | default: FFFFFF (for white)")
-            .define("textColor", "FFFFFF");
+    private static final ForgeConfigSpec.ConfigValue<String> TEXT_COLOR_WITH_TRANSPARENCY = BUILDER_CLIENT
+            .comment("Color of the Day Counter (with transparency) | default: FFFFFFFF (the first FFs are the transparency value)")
+            .define("textColorWithTransparency", "FFFFFFFF");
 
     private static final ForgeConfigSpec.ConfigValue<String> DAY_COUNT_STRING = BUILDER_CLIENT
             .comment("DayCounter String | default: 'Day: '")
@@ -83,7 +83,7 @@ public class MainConfig
     private static float sizeY = 2.0f;
     private static float locationX = 2.0f;
     private static float locationY = 2.0f;
-    private static String textColor = "FFFFFF";
+    private static String textColorWithTransparency = "FFFFFFFF";
     private static String dayCounterString = "Day: ";
 
     @SubscribeEvent
@@ -101,7 +101,7 @@ public class MainConfig
             sizeY = SIZE_Y.get().floatValue();
             locationX = LOCATION_X.get().floatValue();
             locationY = LOCATION_Y.get().floatValue();
-            textColor = TEXT_COLOR.get();
+            textColorWithTransparency = TEXT_COLOR_WITH_TRANSPARENCY.get();
         }
     }
 }

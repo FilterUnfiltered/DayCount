@@ -2,19 +2,16 @@ package net.petemc.daycount;
 
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.petemc.daycount.client.DayCountHud;
-import net.petemc.daycount.config.MainConfig;
+import net.petemc.daycount.client.*;
+import net.petemc.daycount.config.*;
 import org.slf4j.Logger;
 
 @Mod(DayCount.MOD_ID)
@@ -24,21 +21,27 @@ public class DayCount {
 
     public static boolean dayCountEnabled = false;
 
-    public DayCount() {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    public DayCount(FMLJavaModLoadingContext context) {
+        var modBusGroup = context.getModBusGroup();
+        //IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        modEventBus.addListener(this::commonSetup);
+        // Register the commonSetup method for modloading
+        FMLCommonSetupEvent.getBus(modBusGroup).addListener(this::commonSetup);
+        FMLClientSetupEvent.getBus(modBusGroup).addListener(ClientModEvents::onClientSetup);
         DayCountHud.init();
 
-        MinecraftForge.EVENT_BUS.register(this);
-        modEventBus.addListener(this::addCreative);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, MainConfig.SPEC_CLIENT);
+        ServerStartingEvent.BUS.addListener(this::onServerStarting);
+
+        // Register the item to a creative tab
+        BuildCreativeModeTabContentsEvent.getBus(modBusGroup).addListener(this::addCreative);
+
+        context.registerConfig(ModConfig.Type.CLIENT, MainConfig.SPEC_CLIENT);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             dayCountEnabled = MainConfig.getDayCountEnabled();
-            DayCountHud.setCurrentTextColor(MainConfig.getTextColor());
+            DayCountHud.setCurrentTextColor(MainConfig.getTextColorWithTransparency());
         });
     }
 

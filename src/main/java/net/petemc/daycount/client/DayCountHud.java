@@ -1,16 +1,17 @@
 package net.petemc.daycount.client;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.LayeredDraw;
 import net.petemc.daycount.DayCount;
 import net.petemc.daycount.config.MainConfig;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix3x2fStack;
 
-public class DayCountHud implements LayeredDraw.Layer {
+public class DayCountHud implements Gui.RenderFunction {
     public static DayCountHud DAY_COUNT_HUD_INSTANCE;
-    private static String currentTextColor = "FFFFFF";
+    private static String currentTextColor = "FFFFFFFF";
 
     public static void setCurrentTextColor(String value) {
         currentTextColor = value;
@@ -25,20 +26,21 @@ public class DayCountHud implements LayeredDraw.Layer {
     }
 
     @Override
-    public void render(@NotNull GuiGraphics guiGraphics, float v) {
+    public void render(@NotNull GuiGraphics guiGraphics, DeltaTracker pDeltaTracker) {
         if (DayCount.dayCountEnabled) {
             Minecraft mc = Minecraft.getInstance();
-            assert mc.level != null;
-            int currentDay = (int) (mc.level.getDayTime() / 24000L);
-            assert mc.gameMode != null;
-            if (mc.gameMode.getPlayerMode().isSurvival() || mc.gameMode.getPlayerMode().isCreative()) {
-                PoseStack matrixStack = guiGraphics.pose();
-                matrixStack.pushPose();
-                matrixStack.translate(MainConfig.getLocationX(), MainConfig.getLocationY(), 0);
-                matrixStack.scale(MainConfig.getSizeX(), MainConfig.getSizeY(), 2.5f);
-
-                guiGraphics.drawString(mc.font, MainConfig.getDayCounterString() + (currentDay + MainConfig.getDayOffset()), 1, 1, Integer.parseInt(currentTextColor, 16));
-                matrixStack.popPose();
+            if (mc.level != null) {
+                int currentDay = (int) (mc.level.getDayTime() / 24000L);
+                if (mc.gameMode != null) {
+                    if (mc.gameMode.getPlayerMode().isSurvival() || mc.gameMode.getPlayerMode().isCreative()) {
+                        Matrix3x2fStack matrixStack = guiGraphics.pose();
+                        matrixStack.pushMatrix();
+                        matrixStack.translate(MainConfig.getLocationX(), MainConfig.getLocationY(), matrixStack);
+                        matrixStack.scale(MainConfig.getSizeX(), MainConfig.getSizeY(), matrixStack);
+                        guiGraphics.drawString(mc.font, MainConfig.getDayCounterString() + (currentDay + MainConfig.getDayOffset()), 1, 1, (int) Long.parseLong(currentTextColor, 16));
+                        matrixStack.popMatrix();
+                    }
+                }
             }
         }
     }

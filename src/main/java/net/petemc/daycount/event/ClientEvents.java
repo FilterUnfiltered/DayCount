@@ -1,14 +1,18 @@
 package net.petemc.daycount.event;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.client.event.ScreenEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.petemc.daycount.DayCount;
-import net.petemc.daycount.client.DayCountHud;
-import net.petemc.daycount.util.KeyBinding;
+import net.petemc.daycount.*;
+import net.petemc.daycount.client.*;
+import net.petemc.daycount.util.*;
+
+import java.awt.image.renderable.RenderContext;
 
 public class ClientEvents {
 
@@ -23,7 +27,7 @@ public class ClientEvents {
 
         @SubscribeEvent
         public static void registerGuiOverlays(CustomizeGuiOverlayEvent event) {
-            DayCountHud.DAY_COUNT_HUD_INSTANCE.render(event.getGuiGraphics(), event.getPartialTick());
+            DayCountHud.DAY_COUNT_HUD_INSTANCE.render(event.getGuiGraphics(), null);
         }
     }
 
