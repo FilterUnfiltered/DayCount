@@ -102,6 +102,7 @@ public class MainConfig
             locationX = LOCATION_X.get().floatValue();
             locationY = LOCATION_Y.get().floatValue();
             textColor = TEXT_COLOR.get();
+            dayCounterString = DAY_COUNT_STRING.get();
         }
     }
 }
