@@ -12,6 +12,15 @@ import net.petemc.daycount.DayCount;
 import net.petemc.daycount.config.MainConfig;
 
 public class DayCountClient {
+    private static String currentTextColor = "FFFFFF";
+
+    public static void setCurrentTextColor(String value) {
+        currentTextColor = value;
+    }
+
+    public String getCurrentTextColor() {
+        return currentTextColor;
+    }
 
     public static final IGuiOverlay HUD_DAY_COUNTER = ((gui, poseStack, partialTick, width, height) -> {
         if (DayCount.dayCountEnabled) {
@@ -25,7 +34,7 @@ public class DayCountClient {
                 poseStack.scale(MainConfig.getSizeX(), MainConfig.getSizeY(), 2.5f);
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-                GuiComponent.drawString(poseStack, mc.font, "Day: " + (currentDay + MainConfig.getDayOffset()), 2, 2, MainConfig.getTextColor());
+                GuiComponent.drawString(poseStack, mc.font, MainConfig.getDayCounterString() + (currentDay + MainConfig.getDayOffset()), 2, 2, Integer.parseInt(currentTextColor, 16));
                 poseStack.popPose();
             }
         }

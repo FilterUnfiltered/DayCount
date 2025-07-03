@@ -43,7 +43,7 @@ public class DayCount {
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         LOGGER.info("Initializing DayCount mod for Forge");
-
+        DayCountClient.setCurrentTextColor(MainConfig.getTextColor());
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
