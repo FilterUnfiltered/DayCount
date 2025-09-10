@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.eventbus.api.bus.BusGroup;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -22,13 +23,11 @@ public class DayCount {
     public static boolean dayCountEnabled = false;
 
     public DayCount(FMLJavaModLoadingContext context) {
-        var modBusGroup = context.getModBusGroup();
-        //IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        BusGroup modBusGroup = context.getModBusGroup();
 
         // Register the commonSetup method for modloading
         FMLCommonSetupEvent.getBus(modBusGroup).addListener(this::commonSetup);
         FMLClientSetupEvent.getBus(modBusGroup).addListener(ClientModEvents::onClientSetup);
-        DayCountHud.init();
 
         ServerStartingEvent.BUS.addListener(this::onServerStarting);
 
@@ -40,8 +39,7 @@ public class DayCount {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            dayCountEnabled = MainConfig.getDayCountEnabled();
-            DayCountHud.setCurrentTextColor(MainConfig.getTextColorWithTransparency());
+
         });
     }
 
@@ -51,8 +49,7 @@ public class DayCount {
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-        LOGGER.info("Initializing DayCount mod for Forge");
-
+        LOGGER.info("client side mod, ignoring server side");
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
@@ -60,7 +57,10 @@ public class DayCount {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-
+            LOGGER.info("Initializing DayCount mod for Forge");
+            dayCountEnabled = MainConfig.getDayCountEnabled();
+            DayCountHud.setCurrentTextColor(MainConfig.getTextColorWithTransparency());
+            DayCountHud.init();
         }
     }
 }
