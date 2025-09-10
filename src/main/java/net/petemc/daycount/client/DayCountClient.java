@@ -7,10 +7,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import net.petemc.daycount.DayCount;
 import net.petemc.daycount.config.MainConfig;
 
+@OnlyIn(Dist.CLIENT)
 public class DayCountClient {
     private static String currentTextColor = "FFFFFF";
 
