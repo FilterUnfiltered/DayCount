@@ -24,21 +24,20 @@ public class DayCount {
 
     public static boolean dayCountEnabled = false;
 
-    public DayCount() {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    public DayCount(FMLJavaModLoadingContext context) {
+        IEventBus modEventBus = context.getModEventBus();
 
         modEventBus.addListener(this::commonSetup);
         DayCountHud.init();
 
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, MainConfig.SPEC_CLIENT);
+        context.registerConfig(ModConfig.Type.CLIENT, MainConfig.SPEC_CLIENT);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            dayCountEnabled = MainConfig.getDayCountEnabled();
-            DayCountHud.setCurrentTextColor(MainConfig.getTextColor());
+
         });
     }
 
@@ -48,8 +47,7 @@ public class DayCount {
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-        LOGGER.info("Initializing DayCount mod for Forge");
-
+        LOGGER.info("client side mod, ignoring server side");
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
@@ -57,7 +55,9 @@ public class DayCount {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-
+            LOGGER.info("Initializing DayCount mod for Forge");
+            dayCountEnabled = MainConfig.getDayCountEnabled();
+            DayCountHud.setCurrentTextColor(MainConfig.getTextColor());
         }
     }
 }
