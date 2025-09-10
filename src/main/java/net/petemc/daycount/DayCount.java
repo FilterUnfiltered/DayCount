@@ -7,7 +7,6 @@ import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -28,7 +27,6 @@ public class DayCount {
         IEventBus modEventBus = context.getModEventBus();
 
         modEventBus.addListener(this::commonSetup);
-        DayCountHud.init();
 
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
@@ -58,6 +56,7 @@ public class DayCount {
             LOGGER.info("Initializing DayCount mod for Forge");
             dayCountEnabled = MainConfig.getDayCountEnabled();
             DayCountHud.setCurrentTextColor(MainConfig.getTextColor());
+            DayCountHud.init();
         }
     }
 }

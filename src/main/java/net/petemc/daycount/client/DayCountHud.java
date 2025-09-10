@@ -4,10 +4,13 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.LayeredDraw;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.petemc.daycount.DayCount;
 import net.petemc.daycount.config.MainConfig;
 import org.jetbrains.annotations.NotNull;
 
+@OnlyIn(Dist.CLIENT)
 public class DayCountHud implements LayeredDraw.Layer {
     public static DayCountHud DAY_COUNT_HUD_INSTANCE;
     private static String currentTextColor = "FFFFFF";
