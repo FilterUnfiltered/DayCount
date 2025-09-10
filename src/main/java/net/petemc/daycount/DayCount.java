@@ -38,8 +38,7 @@ public class DayCount {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            LOGGER.info("Initializing DayCount mod for Forge");
-            dayCountEnabled = MainConfig.getDayCountEnabled();
+
         });
     }
 
@@ -57,6 +56,8 @@ public class DayCount {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            LOGGER.info("Initializing DayCount mod for Forge");
+            dayCountEnabled = MainConfig.getDayCountEnabled();
             DayCountClient.setCurrentTextColor(MainConfig.getTextColor());
         }
 
