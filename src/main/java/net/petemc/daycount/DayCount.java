@@ -2,6 +2,7 @@ package net.petemc.daycount;
 
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -37,8 +38,8 @@ public class DayCount {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
+            LOGGER.info("Initializing DayCount mod for Forge");
             dayCountEnabled = MainConfig.getDayCountEnabled();
-            DayCountClient.setCurrentTextColor(MainConfig.getTextColor());
         });
     }
 
@@ -48,8 +49,7 @@ public class DayCount {
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-        LOGGER.info("Initializing DayCount mod for Forge");
-
+        LOGGER.info("client side mod, ignoring server side");
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
@@ -57,7 +57,7 @@ public class DayCount {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-
+            DayCountClient.setCurrentTextColor(MainConfig.getTextColor());
         }
 
         @SubscribeEvent
