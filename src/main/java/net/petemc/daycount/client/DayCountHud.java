@@ -4,11 +4,14 @@ import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.petemc.daycount.DayCount;
 import net.petemc.daycount.config.MainConfig;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix3x2fStack;
 
+@OnlyIn(Dist.CLIENT)
 public class DayCountHud implements Gui.RenderFunction {
     public static DayCountHud DAY_COUNT_HUD_INSTANCE;
     private static String currentTextColor = "FFFFFFFF";
