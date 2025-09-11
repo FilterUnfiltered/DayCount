@@ -26,7 +26,6 @@ public class DayCount {
 
     public DayCount(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
-        DayCountHud.init();
 
         NeoForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
@@ -35,8 +34,7 @@ public class DayCount {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            dayCountEnabled = MainConfig.getDayCountEnabled();
-            DayCountHud.setCurrentTextColor(MainConfig.getTextColor());
+
         });
     }
 
@@ -46,8 +44,7 @@ public class DayCount {
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-        LOGGER.info("Initializing DayCount mod for Forge");
-
+        LOGGER.info("client side mod, ignoring server side");
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
@@ -55,7 +52,10 @@ public class DayCount {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-
+            LOGGER.info("Initializing DayCount mod for Forge");
+            dayCountEnabled = MainConfig.getDayCountEnabled();
+            DayCountHud.setCurrentTextColor(MainConfig.getTextColor());
+            DayCountHud.init();
         }
     }
 }

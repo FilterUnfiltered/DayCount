@@ -5,10 +5,13 @@ import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.LayeredDraw;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.petemc.daycount.DayCount;
 import net.petemc.daycount.config.MainConfig;
 import org.jetbrains.annotations.NotNull;
 
+@OnlyIn(Dist.CLIENT)
 public class DayCountHud implements LayeredDraw.Layer {
     public static DayCountHud DAY_COUNT_HUD_INSTANCE;
     private static String currentTextColor = "FFFFFF";
