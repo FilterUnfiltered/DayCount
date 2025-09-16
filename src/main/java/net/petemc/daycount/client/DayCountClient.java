@@ -31,7 +31,8 @@ public class DayCountClient {
             assert mc.level != null;
             int currentDay = (int) (mc.level.getDayTime() / 24000L);
             assert mc.gameMode != null;
-            if (mc.gameMode.getPlayerMode().isSurvival() || mc.gameMode.getPlayerMode().isCreative()) {
+            if ((mc.gameMode.getPlayerMode().isSurvival() || mc.gameMode.getPlayerMode().isCreative()) &&
+                    !mc.options.renderDebug) {
                 poseStack.pushPose();
                 poseStack.translate(MainConfig.getLocationX(), MainConfig.getLocationY(), 0);
                 poseStack.scale(MainConfig.getSizeX(), MainConfig.getSizeY(), 2.5f);
