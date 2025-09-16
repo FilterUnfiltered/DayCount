@@ -1,6 +1,6 @@
-package com.intijir.daycount.config;
+package net.petemc.daycount.config;
 
-import com.intijir.daycount.DayCount;
+import net.petemc.daycount.DayCount;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;

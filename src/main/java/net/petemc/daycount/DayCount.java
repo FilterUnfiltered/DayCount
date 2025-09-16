@@ -1,6 +1,6 @@
-package com.intijir.daycount;
+package net.petemc.daycount;
 
-import com.intijir.daycount.config.DayCountConfig;
+import net.petemc.daycount.config.DayCountConfig;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

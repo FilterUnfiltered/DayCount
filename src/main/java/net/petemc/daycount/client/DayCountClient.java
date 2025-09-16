@@ -1,6 +1,6 @@
-package com.intijir.daycount.client;
+package net.petemc.daycount.client;
 
-import com.intijir.daycount.config.DayCountConfig;
+import net.petemc.daycount.config.DayCountConfig;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
