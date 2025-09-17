@@ -1,6 +1,6 @@
-package com.intijir.daycount.util;
+package net.petemc.daycount.util;
 
-import com.intijir.daycount.config.DayCountConfig;
+import net.petemc.daycount.config.DayCountConfig;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import me.shedaniel.autoconfig.AutoConfig;

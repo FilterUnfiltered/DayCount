@@ -1,6 +1,6 @@
-package com.intijir.daycount.client;
+package net.petemc.daycount.client;
 
-import com.intijir.daycount.config.DayCountConfig;
+import net.petemc.daycount.config.DayCountConfig;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.option.KeyBinding;

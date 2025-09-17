@@ -1,6 +1,5 @@
-package com.intijir.daycount.client;
+package net.petemc.daycount.client;
 
-import com.intijir.daycount.config.DayCountConfig;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -9,6 +8,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.petemc.daycount.config.DayCountConfig;
 
 @Environment(EnvType.CLIENT)
 public class DayCountClient implements ClientModInitializer, HudRenderCallback {
