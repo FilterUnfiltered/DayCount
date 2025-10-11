@@ -1,6 +1,8 @@
 package net.petemc.daycount;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -11,6 +13,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
 import net.petemc.daycount.client.*;
 import net.petemc.daycount.config.*;
 import org.slf4j.Logger;
@@ -19,6 +22,8 @@ import org.slf4j.Logger;
 public class DayCount {
     public static final String MOD_ID = "daycount";
     public static final Logger LOGGER = LogUtils.getLogger();
+
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
 
     public static boolean dayCountEnabled = false;
 
@@ -31,8 +36,8 @@ public class DayCount {
 
         ServerStartingEvent.BUS.addListener(this::onServerStarting);
 
-        // Register the item to a creative tab
-        BuildCreativeModeTabContentsEvent.getBus(modBusGroup).addListener(this::addCreative);
+        // Register the Deferred Register to the mod event bus so tabs get registered
+        CREATIVE_MODE_TABS.register(modBusGroup);
 
         context.registerConfig(ModConfig.Type.CLIENT, MainConfig.SPEC_CLIENT);
     }
@@ -43,7 +48,7 @@ public class DayCount {
         });
     }
 
-    private void addCreative(BuildCreativeModeTabContentsEvent event) {
+    private static void addCreative(BuildCreativeModeTabContentsEvent event) {
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

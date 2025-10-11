@@ -25,10 +25,7 @@ public class ClientEvents {
 
             DayCountHud.DAY_COUNT_HUD_INSTANCE.render(event.getGuiGraphics(), null);
         }
-    }
 
-    @Mod.EventBusSubscriber(modid = DayCount.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class ClientModBusEvents {
         @SubscribeEvent
         public static void onKeyRegister(RegisterKeyMappingsEvent event) {
             event.register(KeyBinding.DAYCOUNT_KEY);
