@@ -39,6 +39,9 @@ public class DayCount {
         // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modBusGroup);
 
+        // Register the items to a creative tab
+        BuildCreativeModeTabContentsEvent.BUS.addListener(DayCount::addCreative);
+
         context.registerConfig(ModConfig.Type.CLIENT, MainConfig.SPEC_CLIENT);
     }
 
