@@ -11,6 +11,8 @@ public class MainConfig
 {
     public static boolean getDayCountEnabled() { return dayCountEnabled; }
 
+    public static boolean getDisplayDayCountWhileShowingF3Info() { return displayDayCountWhileShowingF3Info; }
+
     public static int getDayOffset() {
         return dayOffset;
     }
@@ -47,6 +49,10 @@ public class MainConfig
             .comment("If true, the Day Count will be displayed | default: true")
             .define("dayCountEnabled", true);
 
+    private static final ForgeConfigSpec.BooleanValue DISPLAY_DAY_COUNT_WHILE_SHOWING_F3 = BUILDER_CLIENT
+            .comment("If true, the Day Count will be displayed even when the debug info (F3) is shown | default: false")
+            .define("displayDayCountWhileShowingF3Info", false);
+
     private static final ForgeConfigSpec.IntValue DAY_OFFSET = BUILDER_CLIENT
             .comment("Offset to add to the Day Count | default: 1")
             .defineInRange("dayOffset", 1, 0, Integer.MAX_VALUE);
@@ -78,6 +84,7 @@ public class MainConfig
     public static final ForgeConfigSpec SPEC_CLIENT = BUILDER_CLIENT.build();
 
     private static boolean dayCountEnabled = true;
+    private static boolean displayDayCountWhileShowingF3Info = false;
     private static int dayOffset = 1;
     private static float sizeX = 2.0f;
     private static float sizeY = 2.0f;
@@ -96,6 +103,7 @@ public class MainConfig
         if (SPEC_CLIENT.isLoaded()) {
             DayCount.LOGGER.info("Loading {} client config", DayCount.MOD_ID);
             dayCountEnabled = DAY_COUNT_ENABLED.get();
+            displayDayCountWhileShowingF3Info = DISPLAY_DAY_COUNT_WHILE_SHOWING_F3.get();
             dayOffset = DAY_OFFSET.get();
             sizeX = SIZE_X.get().floatValue();
             sizeY = SIZE_Y.get().floatValue();
